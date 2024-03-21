@@ -1,12 +1,12 @@
-using System.Globalization;
 using System.Net;
 using System.Text;
+using FTPserver_console;
+
 
 namespace FTPserver_form {
     public partial class Form1 : Form {
         ToastManager toastmanager = null;
         FTPserver ftpserver = null;
-
         static Form1 instance = null;
         static int max_logLength = 1000;
         static bool started = false;
@@ -17,7 +17,7 @@ namespace FTPserver_form {
 
         public Form1() {
             InitializeComponent();
-            ftpserver = new FTPserver();
+            ftpserver = new FTPserver((log)=> WriteLog(log));
             toastmanager = new ToastManager(footer_statuslabel, this);
             instance = this;
         }
@@ -38,14 +38,14 @@ namespace FTPserver_form {
                 return;
             }
 
-            do {
-                if (!IPAddress.TryParse(textbox_ipaddress.Text, out IPAddress temp_ad)) {
-                    MessageBox.Show("unexpected ipaddress");
-                    return;
-                }
-            } while (false);
+            if (!IPAddress.TryParse(textbox_ipaddress.Text, out IPAddress address)) {
+                MessageBox.Show("unexpected ipaddress");
+                return;
+            }
 
-            Task.Run(() => ftpserver.start(textbox_targetPath.Text, textbox_ipaddress.Text));
+
+
+            Task.Run(() => ftpserver.start_server(textbox_targetPath.Text, address));
             started = true;
             button_run.Enabled = false;
 
