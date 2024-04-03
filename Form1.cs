@@ -17,7 +17,7 @@ namespace FTPserver_form {
 
         public Form1() {
             InitializeComponent();
-            ftpserver = new FTPserver((log)=> WriteLog(log));
+            ftpserver = new FTPserver((log) => WriteLog(log));
             toastmanager = new ToastManager(footer_statuslabel, this);
             instance = this;
         }
@@ -129,12 +129,29 @@ namespace FTPserver_form {
         private void button_setting_Click(object sender, EventArgs e) {
 
             Form_setting setting = new Form_setting(max_logLength);
-            DialogResult result= setting.ShowDialog();
-            if(result== DialogResult.OK) {
+            DialogResult result = setting.ShowDialog();
+            if (result == DialogResult.OK) {
                 SaveSetting();
                 toastmanager.ShowToast("setting has saved");
             }
             //ShowDialog(new Form_setting(max_logLength));
+        }
+
+        protected override void OnFormClosing(FormClosingEventArgs e) {
+            if (e.CloseReason == CloseReason.UserClosing) {
+                e.Cancel = true; // Prevent the form from closing
+                this.Hide(); // Hide the form instead of closing it
+            }
+            base.OnFormClosing(e);
+        }
+
+        private void notifyIcon1_MouseDoubleClick_1(object sender, MouseEventArgs e) {
+            this.Show();
+        }
+
+        private void closeToolStripMenuItem_Click(object sender, EventArgs e) {
+            // Clean up and exit the application
+            Application.Exit();
         }
     }
 }

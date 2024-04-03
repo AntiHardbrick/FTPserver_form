@@ -23,6 +23,8 @@
         ///  the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
+            components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             textbox_targetPath = new TextBox();
             button_selectpath = new Button();
             textbox_ipaddress = new TextBox();
@@ -31,7 +33,11 @@
             button_run = new Button();
             text_logbox = new TextBox();
             button_setting = new Button();
+            notifyIcon1 = new NotifyIcon(components);
+            contextMenuStrip1 = new ContextMenuStrip(components);
+            closeToolStripMenuItem = new ToolStripMenuItem();
             statusStrip1.SuspendLayout();
+            contextMenuStrip1.SuspendLayout();
             SuspendLayout();
             // 
             // textbox_targetPath
@@ -64,6 +70,7 @@
             // 
             // statusStrip1
             // 
+            statusStrip1.BackColor = SystemColors.ScrollBar;
             statusStrip1.Items.AddRange(new ToolStripItem[] { footer_statuslabel });
             statusStrip1.Location = new Point(0, 115);
             statusStrip1.Name = "statusStrip1";
@@ -113,11 +120,32 @@
             button_setting.UseVisualStyleBackColor = true;
             button_setting.Click += button_setting_Click;
             // 
+            // notifyIcon1
+            // 
+            notifyIcon1.ContextMenuStrip = contextMenuStrip1;
+            notifyIcon1.Icon = (Icon)resources.GetObject("notifyIcon1.Icon");
+            notifyIcon1.Text = "FTPserver";
+            notifyIcon1.Visible = true;
+            notifyIcon1.MouseDoubleClick += notifyIcon1_MouseDoubleClick_1;
+            // 
+            // contextMenuStrip1
+            // 
+            contextMenuStrip1.Items.AddRange(new ToolStripItem[] { closeToolStripMenuItem });
+            contextMenuStrip1.Name = "contextMenuStrip1";
+            contextMenuStrip1.Size = new Size(102, 26);
+            // 
+            // closeToolStripMenuItem
+            // 
+            closeToolStripMenuItem.Name = "closeToolStripMenuItem";
+            closeToolStripMenuItem.Size = new Size(101, 22);
+            closeToolStripMenuItem.Text = "close";
+            closeToolStripMenuItem.Click += closeToolStripMenuItem_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = SystemColors.Control;
+            BackColor = SystemColors.WindowFrame;
             ClientSize = new Size(320, 137);
             Controls.Add(button_setting);
             Controls.Add(text_logbox);
@@ -126,11 +154,13 @@
             Controls.Add(textbox_ipaddress);
             Controls.Add(button_selectpath);
             Controls.Add(textbox_targetPath);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "Form1";
             Text = "FTPserver";
             Load += Form1_Load;
             statusStrip1.ResumeLayout(false);
             statusStrip1.PerformLayout();
+            contextMenuStrip1.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -145,5 +175,8 @@
         private Button button_run;
         private TextBox text_logbox;
         private Button button_setting;
+        private NotifyIcon notifyIcon1;
+        private ContextMenuStrip contextMenuStrip1;
+        private ToolStripMenuItem closeToolStripMenuItem;
     }
 }
