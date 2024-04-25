@@ -17,7 +17,9 @@ namespace FTPserver_form {
 
         public Form1() {
             InitializeComponent();
-            ftpserver = new FTPserver((log) => WriteLog(log));
+            Action<string> logfunction = new Action<string>((log) => WriteLog(log)); 
+            //log/warning/error function is same
+            ftpserver = new FTPserver(logfunction, logfunction, logfunction);
             toastmanager = new ToastManager(footer_statuslabel, this);
             instance = this;
         }
