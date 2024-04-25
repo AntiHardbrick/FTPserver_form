@@ -17,9 +17,12 @@ namespace FTPserver_form {
 
         public Form1() {
             InitializeComponent();
-            Action<string> logfunction = new Action<string>((log) => WriteLog(log)); 
+            Action<string> logfunction = new Action<string>((log) => WriteLog(log));
+            Action<string> errorFunction = new Action<string>((log) => {
+                MessageBox.Show(log, "error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            });
             //log/warning/error function is same
-            ftpserver = new FTPserver(logfunction, logfunction, logfunction);
+            ftpserver = new FTPserver(logfunction, logfunction, errorFunction);
             toastmanager = new ToastManager(footer_statuslabel, this);
             instance = this;
         }
