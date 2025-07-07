@@ -15,6 +15,8 @@ namespace FTPserver_form {
             max_logLength = len;
         }
 
+        StringBuilder lastlog_builder;
+
         public Form1() {
             InitializeComponent();
             Action<string> logfunction = new Action<string>((log) => WriteLog(log));
@@ -24,6 +26,7 @@ namespace FTPserver_form {
             //log/warning/error function is same
             ftpserver = new FTPserver(logfunction, logfunction, errorFunction);
             toastmanager = new ToastManager(footer_statuslabel, this);
+            lastlog_builder = new StringBuilder();
             instance = this;
         }
 
@@ -60,17 +63,22 @@ namespace FTPserver_form {
         }
 
         public static void WriteLog(string log) {
-            StringBuilder logbuilder = new StringBuilder();
-            logbuilder.Append(instance.text_logbox.Text);
+            //StringBuilder logbuilder = new StringBuilder();
+            //logbuilder.Append(instance.text_logbox.Text);
 
-            logbuilder.Append($"{log}\r\n");
+            //logbuilder.Append($"{log}\r\n");
+            instance.lastlog_builder.Append($"{log}\r\n");
 
-            if (logbuilder.Length > max_logLength) {
-                logbuilder.Remove(0, logbuilder.Length - max_logLength);
+
+            if (instance.lastlog_builder.Length > max_logLength) {
+                instance.lastlog_builder.Remove(0, instance.lastlog_builder.Length - max_logLength);
             }
 
             instance.Invoke(() => {
-                instance.text_logbox.Text = logbuilder.ToString();
+                instance.text_logbox.Text = instance.lastlog_builder.ToString();
+                //instance.text_logbox.Focus();
+                instance.text_logbox.Select(instance.lastlog_builder.Length, 0);
+                instance.text_logbox.ScrollToCaret();
             });
         }
 

@@ -6,7 +6,12 @@
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
+    <ApplicationIcon>shintail-satgat.ico</ApplicationIcon>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="shintail-satgat.ico" />
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\FTPserver\FTPserver.csproj" />
